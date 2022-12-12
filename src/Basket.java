@@ -1,7 +1,6 @@
 import java.io.*;
 
-public class Basket {
-
+public class Basket implements Serializable {
     protected String[] products;
     protected int[] prices;
     protected int[] carts;
@@ -25,42 +24,20 @@ public class Basket {
         }
         System.out.println("Итого: " + sumProducts + " руб.");
     }
-    public void saveTxt(File file) {
-        try (PrintWriter out = new PrintWriter(file)) {
-            for (String product : products) {
-                out.write(product + " ");
-            }
-            out.write("\n");
-            for (int price : prices) {
-                out.write(price + " ");
-            }
-            out.write("\n");
-            for (int cart : carts) {
-                out.write(cart + " ");
-            }
+    public void saveBin(File file, Basket basket) {
+        try (ObjectOutputStream oos = new ObjectOutputStream(new FileOutputStream(file))) {
+            oos.writeObject(basket);
         } catch (IOException e) {
             System.out.println(e.getMessage());
         }
     }
-    public static Basket loadFromTxtFile(File textFile) {
-        try (BufferedReader reader = new BufferedReader(new FileReader(textFile))) {
-            String[] products = reader.readLine().split(" ");
-
-            String[] pricesStr = reader.readLine().split(" ");
-            int[] prices = new int[pricesStr.length];
-            for (int i = 0; i < pricesStr.length; i++) {
-                prices[i] = Integer.parseInt(pricesStr[i]);
-            }
-
-            Basket basket = new Basket(products, prices);
-            String[] cartStr = reader.readLine().split(" ");
-            for (int i = 0; i < cartStr.length; i++) {
-                basket.carts[i] = Integer.parseInt(cartStr[i]);
-            }
-            return basket;
-        } catch (IOException e) {
+    static Basket loadFromBinFile(File file) {
+        Basket basket = null;
+        try (ObjectInputStream ois = new ObjectInputStream(new FileInputStream(file))) {
+            basket = (Basket) ois.readObject();
+        } catch (Exception e) {
             System.out.println(e.getMessage());
         }
-        return null;
+        return basket;
     }
 }
