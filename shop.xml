@@ -7,8 +7,8 @@
 
     <save>
         <enabled>true</enabled>
-        <fileName>basket.json</fileName>
-        <format>json</format>
+        <fileName>basket.txt</fileName>
+        <format>text</format>
     </save>
 
     <log>
