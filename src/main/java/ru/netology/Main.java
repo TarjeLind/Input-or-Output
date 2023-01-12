@@ -87,7 +87,7 @@ public class Main {
             }
         }
         if (saveLog) {
-            clientLog.exportCSV(fileLog);
+            clientLog.exportAsCSV(fileLog);
         }
         basket.printCart();
     }

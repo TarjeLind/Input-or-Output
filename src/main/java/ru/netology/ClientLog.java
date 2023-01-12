@@ -16,7 +16,7 @@ public class ClientLog {
         System.out.println();
     }
 
-    public static void exportCSV(File file) {
+    public static void exportAsCSV(File file) {
         try (CSVWriter csvWriter = new CSVWriter(new FileWriter("log.csv", true))) {
             csvWriter.writeAll(list);
         } catch (IOException e) {
